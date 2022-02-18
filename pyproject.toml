@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "note-cast"
+version = "0.1.0"
+description = "Programming Languages Project"
+authors = ["Elahe <1997.esm@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.73.0"
+python-dotenv = "^0.19.2"
+uvicorn = {extras = ["standard"], version = "^0.17.4"}
+wheel = "^0.37.1"
+neomodel = "^4.0.8"
+fastapi-login = "^1.7.3"
+SpeechRecognition = "^3.8.1"
+pydub = "^0.25.1"
+podcast-api = "^1.1.0"
+loguru = "^0.6.0"
+fastapi-mail = "^1.0.4"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+strawberry-graphql = {extras = ["fastapi"], version = "^0.97.0"}
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+black = "^22.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
