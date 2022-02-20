@@ -4,6 +4,12 @@ from fastapi_login.exceptions import InvalidCredentialsException
 from note_cast.app import manager as login_manager
 from note_cast.db.crud.user import load_user
 from note_cast.db.models import User
+from note_cast.schemas.response import (
+    RestRegisterSuccessResp,
+    RestLoginSuccessResp,
+    UserPydantic,
+    BaseUserPydantic,
+)
 
 router = APIRouter()
 
@@ -18,9 +24,13 @@ def login(data: OAuth2PasswordRequestForm = Depends()):
 
     elif not user.verify_password(password):
         raise InvalidCredentialsException
-
+    
+    user_pydantic = BaseUserPydantic(id=user.u_id, username=user.username)
     access_token = login_manager.create_access_token(data={"sub": email})
-    return {"token": access_token}
+
+    return RestLoginSuccessResp(
+        status=True, message="Successful login", user=user_pydantic, token=access_token
+    )
 
 
 @router.post("/register")
