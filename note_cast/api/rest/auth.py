@@ -44,9 +44,18 @@ def register(data: OAuth2PasswordRequestForm = Depends()):
 
     try:
         new_user: User = User(username=email, email=email, password=password).save()
+        new_user_pydantic = UserPydantic(
+            id=new_user.u_id,
+            username=new_user.username,
+            email=new_user.email,
+            disabled=new_user.disabled,
+            joined_date=new_user.joined_date,
+        )
 
     except Exception as ex:
         print(ex)
         return {"exp": "ex"}
 
-    return {"msg": "success"}
+    return RestRegisterSuccessResp(
+        status=True, message="Successful Registration", user=new_user_pydantic
+    )
