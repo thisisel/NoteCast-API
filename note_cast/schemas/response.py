@@ -6,6 +6,9 @@ class ApiBaseResponse(BaseModel):
     status: bool
     message: str
 
+class CloudinarySuccessResponse(ApiBaseResponse):
+    detail : Optional[dict]
+    asset_public_id : Optional[str]
 
 # TODO Document example for 500 and 404
 class ApiErrorResponse(BaseModel):

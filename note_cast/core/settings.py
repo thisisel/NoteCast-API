@@ -4,7 +4,7 @@ from functools import lru_cache
 from typing import Union
 
 from dotenv import load_dotenv
-from pydantic import BaseSettings
+from pydantic import BaseSettings, HttpUrl
 from starlette.config import Config
 from starlette.datastructures import CommaSeparatedStrings, Secret
 
@@ -37,6 +37,14 @@ class Settings(BaseSettings):
 
     NEO4J_USERNAME: str = config("NEO4J_USERNAME")
     NEO4J_PASSWORD: str = config("NEO4J_PASSWORD")
+
+    REDIS_URL: str = config("REDIS_URL", default="redis://localhost:6379")
+
+    CLOUDINARY_CLOUD_NAME : str = config("CLOUDINARY_CLOUD_NAME")
+    CLOUDINARY_API_KEY : str = config("CLOUDINARY_API_KEY")
+    CLOUDINARY_API_SECRET : str = config("CLOUDINARY_API_SECRET")
+    LOCALHOST_PUBLIC_IP : HttpUrl = config("LOCALHOST_PUBLIC_IP")
+    CLOUDINARY_NOTIFICATION_URL : HttpUrl = f"{LOCALHOST_PUBLIC_IP}/api/rest/callback/cloudinary/upload/"
 
     if FASTAPI_ENV == "development":
         debug: bool = True

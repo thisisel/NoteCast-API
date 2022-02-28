@@ -1,3 +1,4 @@
+from typing import Union
 from neomodel import Q
 from note_cast.security.login_manager import manager as login_manager
 
@@ -5,7 +6,7 @@ from ..models import User
 
 
 @login_manager.user_loader()
-def load_user(user_id: str):
+def load_user(user_id: str) -> Union[None, User]:
     """
     Get a user from the db
     :param user_id: E-Mail of the user

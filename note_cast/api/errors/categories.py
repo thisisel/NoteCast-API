@@ -1,0 +1,7 @@
+USER_404 = "user_404"
+PODCAST_404 = "challenge_404"
+EPISODE_404 = "challenge_404"
+QUOTE_404 = "challenge_404"
+NOTE_404 = "note_404"
+USER_EXISTS = "user_exists"
+LONG_QUOTE = "quote_400"

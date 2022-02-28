@@ -12,7 +12,8 @@ class Category(StructuredNode):
 
 class Podcast(StructuredNode):
     p_id = StringProperty(required=True, index=True)
-    title = StringProperty(required=True, index=True)
+    p_title = StringProperty(required=True, index=True)
+    p_listennotes_url = StringProperty(required=True)
     category = RelationshipTo(Category, "CATEGORIZED_UNDER")
     episodes = RelationshipFrom("Episode", "PUBLISHED_FOR")
 
@@ -22,23 +23,26 @@ class PublishRel(StructuredRel):
 
 
 class Episode(StructuredNode):
-    title = StringProperty(required=True, index=True)
-    length_h = IntegerProperty(required=True)
-    length_m = IntegerProperty(required=True)
-    length_s = IntegerProperty(required=True)
-    num = IntegerProperty(required=True, index=True)
+    e_id = StringProperty(required=True, index=True)
+    e_title = StringProperty(required=True, index=True)
+    e_listennotes_url = StringProperty(required=True)
+    audio_url = StringProperty(required=True)
+    length_h = IntegerProperty()
+    length_m = IntegerProperty()
+    length_s = IntegerProperty()
+    num = IntegerProperty()
     description = StringProperty()
 
     published_for = RelationshipTo("Podcast", "PUBLISHED_FOR", model=PublishRel)
 
 
 class MentionRel(StructuredRel):
-    start_time_h = IntegerProperty(required=True)
-    start_time_m = IntegerProperty(required=True)
-    start_time_s = IntegerProperty(required=True)
-    end_time_h = IntegerProperty(required=True)
-    end_time_m = IntegerProperty(required=True)
-    end_time_s = IntegerProperty(required=True)
+    start_offset_h = IntegerProperty(required=True)
+    start_offset_m = IntegerProperty(required=True)
+    start_offset_s = IntegerProperty(required=True)
+    end_offset_h = IntegerProperty(required=True)
+    end_offset_m = IntegerProperty(required=True)
+    end_offset_s = IntegerProperty(required=True)
 
 
 class BaseNoteActionRel(StructuredRel):
@@ -66,14 +70,16 @@ class AnnotateRel(BaseNoteActionRel):
 
 
 class Quote(StructuredNode):
-    q_id = UniqueIdProperty()
-    text = StringProperty(required=True)
+    q_id = StringProperty(required=True, unique_index=True)
+    transcript = StringProperty()
+    visible = BooleanProperty(default=True)
 
     mentioned_on = RelationshipTo(Episode, "MENTIONED_ON", model=MentionRel)
     attachments = RelationshipFrom("Note", "ATTACHED_TO")
 
 
 class Note(StructuredNode):
+    n_id = UniqueIdProperty()
     text = StringProperty(required=True)
     is_public = BooleanProperty(default=False)
 

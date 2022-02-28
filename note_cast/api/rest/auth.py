@@ -9,12 +9,18 @@ from note_cast.schemas.response import (
     RestLoginSuccessResp,
     UserPydantic,
     BaseUserPydantic,
+    ApiErrorResponse,
 )
 
 router = APIRouter()
 
 
-@router.post("/login")
+@router.post("/login", 
+    responses={
+        201: {"model": RestLoginSuccessResp},
+        400: {"model": ApiErrorResponse},
+    },
+    )
 def login(data: OAuth2PasswordRequestForm = Depends()):
     email = data.username
     password = data.password
@@ -24,8 +30,8 @@ def login(data: OAuth2PasswordRequestForm = Depends()):
 
     elif not user.verify_password(password):
         raise InvalidCredentialsException
-    
-    user_pydantic = BaseUserPydantic(id=user.u_id, username=user.username)
+
+    user_pydantic = BaseUserPydantic(id=user.u_id, username=user.username, email=email)
     access_token = login_manager.create_access_token(data={"sub": email})
 
     return RestLoginSuccessResp(
@@ -33,14 +39,19 @@ def login(data: OAuth2PasswordRequestForm = Depends()):
     )
 
 
-@router.post("/register")
+@router.post("/register",     
+    responses={
+        200: {"model": RestRegisterSuccessResp},
+        400: {"model": ApiErrorResponse},
+    },)
 def register(data: OAuth2PasswordRequestForm = Depends()):
     email = data.username
     password = data.password
 
     if (user := load_user(email)) is not None:
-        # TODO api error msg schema
-        return {"err_msg": "user with this email already exists"}
+        return ApiErrorResponse(
+            category="user_exists", message=f"A user with {email} already exists!"
+        )
 
     try:
         new_user: User = User(username=email, email=email, password=password).save()

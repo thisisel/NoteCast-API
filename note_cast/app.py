@@ -18,7 +18,8 @@ def create_app() -> FastAPI:
         title=settings.PROJECT_NAME, debug=settings.debug, version=settings.VERSION
     )
 
-    n4j_conf.DATABASE_URL = settings.DB_URI
+    # n4j_conf.DATABASE_URL = settings.DB_URI
+    import note_cast.db
 
     manager.useRequest(app)
 
