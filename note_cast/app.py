@@ -2,9 +2,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from fastapi import FastAPI
-from fastapi.exceptions import HTTPException
-from neomodel import config as n4j_conf
+from fastapi import FastAPI, Request
 from starlette.middleware.cors import CORSMiddleware
 
 from note_cast.security.login_manager import manager
@@ -17,8 +15,7 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title=settings.PROJECT_NAME, debug=settings.debug, version=settings.VERSION
     )
-
-    # n4j_conf.DATABASE_URL = settings.DB_URI
+    
     import note_cast.db
 
     manager.useRequest(app)
@@ -30,8 +27,10 @@ def create_app() -> FastAPI:
 
     return app
 
-
 app = create_app()
+
+
+
 
 # TODO add middleware allowed hosts
 def _add_middleware(app: FastAPI) -> None:
@@ -60,3 +59,5 @@ def _add_middleware(app: FastAPI) -> None:
 
 
 # def _get_index_page(debug: bool):
+
+

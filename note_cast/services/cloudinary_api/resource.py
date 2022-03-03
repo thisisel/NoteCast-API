@@ -10,6 +10,5 @@ class CloudinaryResource:
         j = r.json()
 
         transcript = j[0].get("transcript")
-        print(transcript)
 
         return transcript

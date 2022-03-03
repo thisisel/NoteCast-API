@@ -12,5 +12,10 @@ class QuoteQuery:
         if (quote := Quote.nodes.get_or_none(q_id=q_id)) is not None:
             quote.transcript = transcript
             quote.save()
+            print(quote.transcript)
             return quote
         raise DoesNotExist
+
+    @staticmethod
+    def read_quote_by_id(q_id : str):
+        return Quote.nodes.get_or_none(q_id=q_id)

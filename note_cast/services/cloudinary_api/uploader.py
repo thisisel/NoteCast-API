@@ -2,7 +2,7 @@ from note_cast.api.errors.custom_exceptions import CloudinaryUploadException
 from note_cast.api.graphql.inputs import QuoteMetadata
 from note_cast.schemas.response import CloudinarySuccessResponse
 from . helpers import TimestampConverter, get_random_filename
-from .conf import notification_url
+from . import notification_url
 import cloudinary.uploader
 
 
@@ -33,7 +33,7 @@ class CloudinaryUpload:
 
 
     @classmethod
-    def submit_quote(cls, data: QuoteMetadata):
+    def upload_quote(cls, data: QuoteMetadata):
 
         start_offset_s: int = TimestampConverter.timestamp_to_seconds(
             data.start_timestamp

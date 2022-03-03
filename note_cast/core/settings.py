@@ -4,7 +4,7 @@ from functools import lru_cache
 from typing import Union
 
 from dotenv import load_dotenv
-from pydantic import BaseSettings, HttpUrl
+from pydantic import BaseModel, BaseSettings, HttpUrl
 from starlette.config import Config
 from starlette.datastructures import CommaSeparatedStrings, Secret
 
@@ -45,6 +45,7 @@ class Settings(BaseSettings):
     CLOUDINARY_API_SECRET : str = config("CLOUDINARY_API_SECRET")
     LOCALHOST_PUBLIC_IP : HttpUrl = config("LOCALHOST_PUBLIC_IP")
     CLOUDINARY_NOTIFICATION_URL : HttpUrl = f"{LOCALHOST_PUBLIC_IP}/api/rest/callback/cloudinary/upload/"
+    CLOUDINARY_FOLDER : str = config("CLOUDINARY_FOLDER", default="listennotes_segments")
 
     if FASTAPI_ENV == "development":
         debug: bool = True
@@ -64,6 +65,23 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
+
+
+class LoguruConfig(BaseModel):
+    """Loguru configuration to be set for the server"""
+
+    PATH: str = "./"
+    FILENAME: str = "dev.log"
+    LEVEL: str = "info"
+    ROTATION: str = "20 days"
+    RETENTION: str = "1 months"
+    FORMAT: str = "<level>{level: <8}</level> <green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> request id: {extra[request_id]} - <cyan>{name}</cyan>:<cyan>{function}</cyan> - <level>{message}</level>"
+
+@lru_cache()
+def get_loguru_conf():
+    return LoguruConfig()
+
+loguru_conf = get_loguru_conf()
 
 
 @lru_cache()

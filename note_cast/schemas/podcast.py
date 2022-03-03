@@ -1,4 +1,5 @@
 import typing
+from typing import List, Optional, Union
 from datetime import datetime
 
 from pydantic import BaseModel, HttpUrl
@@ -14,9 +15,9 @@ class EpisodeTimestamp(BaseModel):
 
 class Quote(BaseModel):
     q_id: str
-    transcript: typing.Optional[str]
+    transcript: Optional[str]
     visible: bool = True
-    attachments: typing.List[Note]
+    attachments: Optional[List[Note]]
 
 
 class QuoteMetadata(BaseModel):
@@ -27,6 +28,7 @@ class QuoteMetadata(BaseModel):
 
     p_id: str
     e_id: str
+    q_id : Optional[str] = None
 
     p_title: str = None
     e_title: str = None
@@ -34,8 +36,6 @@ class QuoteMetadata(BaseModel):
     p_listennotes_url: HttpUrl = None
     e_listennotes_url: HttpUrl = None
 
-    new_podcast: bool = False
-    new_episode: bool = False
 
 
 class Episode(BaseModel):
@@ -47,7 +47,7 @@ class Episode(BaseModel):
     length_h: int
     length_m: int
     length_s: int
-    quotes: typing.List["Quote"]
+    quotes: List["Quote"]
 
 
 class Podcast(BaseModel):
@@ -55,4 +55,4 @@ class Podcast(BaseModel):
     title: str
     listennotes_url: HttpUrl
     category: str  # TODO enum
-    episodes: typing.List[Episode]
+    episodes: List[Episode]

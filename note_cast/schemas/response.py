@@ -5,9 +5,9 @@ from . user import UserPydantic, BaseUserPydantic
 class ApiBaseResponse(BaseModel):
     status: bool
     message: str
+    detail : Optional[dict]
 
 class CloudinarySuccessResponse(ApiBaseResponse):
-    detail : Optional[dict]
     asset_public_id : Optional[str]
 
 # TODO Document example for 500 and 404
