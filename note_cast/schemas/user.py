@@ -5,13 +5,12 @@ from pydantic import BaseModel, EmailStr, Field
 
 
 class BaseUserPydantic(BaseModel):
-    id: str
+    u_id: str
     username: str
     email: EmailStr
 
 
 class UserPydantic(BaseUserPydantic):
-    email: EmailStr
     disabled: bool
     joined_date: datetime
 

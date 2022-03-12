@@ -40,12 +40,15 @@ class Settings(BaseSettings):
 
     REDIS_URL: str = config("REDIS_URL", default="redis://localhost:6379")
 
-    CLOUDINARY_CLOUD_NAME : str = config("CLOUDINARY_CLOUD_NAME")
-    CLOUDINARY_API_KEY : str = config("CLOUDINARY_API_KEY")
-    CLOUDINARY_API_SECRET : str = config("CLOUDINARY_API_SECRET")
-    LOCALHOST_PUBLIC_IP : HttpUrl = config("LOCALHOST_PUBLIC_IP")
-    CLOUDINARY_NOTIFICATION_URL : HttpUrl = f"{LOCALHOST_PUBLIC_IP}/api/rest/callback/cloudinary/upload/"
-    CLOUDINARY_FOLDER : str = config("CLOUDINARY_FOLDER", default="listennotes_segments")
+    CLOUDINARY_CLOUD_NAME: str = config("CLOUDINARY_CLOUD_NAME")
+    CLOUDINARY_API_KEY: str = config("CLOUDINARY_API_KEY")
+    CLOUDINARY_API_SECRET: str = config("CLOUDINARY_API_SECRET")
+    LOCALHOST_PUBLIC_IP: HttpUrl = config("LOCALHOST_PUBLIC_IP")
+    CLOUDINARY_NOTIFICATION_URL: HttpUrl = (
+        f"{LOCALHOST_PUBLIC_IP}/api/rest/callback/cloudinary/upload/"
+    )
+    CLOUDINARY_FOLDER: str = config("CLOUDINARY_FOLDER", default="listennotes_segments")
+    CLOUDINARY_RAW_CONVERT: bool = config("CLOUDINARY_RAW_CONVERT", default=False)
 
     if FASTAPI_ENV == "development":
         debug: bool = True
@@ -77,9 +80,11 @@ class LoguruConfig(BaseModel):
     RETENTION: str = "1 months"
     FORMAT: str = "<level>{level: <8}</level> <green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> request id: {extra[request_id]} - <cyan>{name}</cyan>:<cyan>{function}</cyan> - <level>{message}</level>"
 
+
 @lru_cache()
 def get_loguru_conf():
     return LoguruConfig()
+
 
 loguru_conf = get_loguru_conf()
 

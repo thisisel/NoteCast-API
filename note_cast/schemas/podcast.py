@@ -2,15 +2,15 @@ import typing
 from typing import List, Optional, Union
 from datetime import datetime
 
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl
 
 from .notes import Note
 
 
 class EpisodeTimestamp(BaseModel):
-    hour: int
-    minute: int
-    seconds: int
+    hour: int = Field(...,ge=0, le=4)
+    minute: int = Field(...,ge=0, le=60)
+    seconds: int = Field(...,ge=0, le=60)
 
 
 class Quote(BaseModel):
@@ -21,7 +21,7 @@ class Quote(BaseModel):
 
 
 class QuoteMetadata(BaseModel):
-    audio_url: str
+    audio_url: HttpUrl
 
     start_timestamp: EpisodeTimestamp
     end_timestamp: EpisodeTimestamp

@@ -1,4 +1,3 @@
-from turtle import st
 from . import QuoteMetadata, EpisodeTimestamp
 def quote_timestamp_to_mentionrel(data : QuoteMetadata):
     

@@ -1,5 +1,3 @@
-
-from ast import Lambda
 import cloudinary
 from note_cast.core.settings import settings
 
@@ -9,8 +7,6 @@ cloudinary.config(
     api_secret=settings.CLOUDINARY_API_SECRET,
     secure=True,
 )
-
-import cloudinary.api
 
 notification_url = settings.CLOUDINARY_NOTIFICATION_URL
 cloudinary_folder = settings.CLOUDINARY_FOLDER

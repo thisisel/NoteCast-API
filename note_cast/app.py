@@ -2,7 +2,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from note_cast.security.login_manager import manager
@@ -15,7 +15,7 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title=settings.PROJECT_NAME, debug=settings.debug, version=settings.VERSION
     )
-    
+
     import note_cast.db
 
     manager.useRequest(app)
@@ -25,11 +25,18 @@ def create_app() -> FastAPI:
         graphql_router, prefix=settings.API_ROOT_PREFIX + "/graphql", tags=["graphql"]
     )
 
+    app.add_api_route(
+        path="/",
+        endpoint=lambda: dict(status=True, project=settings.PROJECT_NAME, version=settings.VERSION),
+        status_code=200,
+        methods=["get"],
+        include_in_schema=False,
+    )
+
     return app
 
+
 app = create_app()
-
-
 
 
 # TODO add middleware allowed hosts
@@ -45,19 +52,3 @@ def _add_middleware(app: FastAPI) -> None:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-
-
-# TODO customize excpetions
-# def _add_exception_handler(app: FastAPI):
-# app.add_exception_handler(NotFound, notfound_error_handler)
-# app.add_exception_handler(HTTPException, http_error_handler)
-# app.add_exception_handler(InternalError, internal_error_handler)
-# app.add_exception_handler(RequestValidationError, http422_error_handler)
-# app.add_exception_handler(Forbidden, forbidden_error_handler)
-# app.add_exception_handler(NotAllowed, notallowed_error_handler)
-# app.add_exception_handler(UnAuthorized, unauthorized_error_handler)
-
-
-# def _get_index_page(debug: bool):
-
-

@@ -31,7 +31,7 @@ def login(data: OAuth2PasswordRequestForm = Depends()):
     elif not user.verify_password(password):
         raise InvalidCredentialsException
 
-    user_pydantic = BaseUserPydantic(id=user.u_id, username=user.username, email=email)
+    user_pydantic = BaseUserPydantic(u_id=user.u_id, username=user.username, email=email)
     access_token = login_manager.create_access_token(data={"sub": email})
 
     return RestLoginSuccessResp(
@@ -56,7 +56,7 @@ def register(data: OAuth2PasswordRequestForm = Depends()):
     try:
         new_user: User = User(username=email, email=email, password=password).save()
         new_user_pydantic = UserPydantic(
-            id=new_user.u_id,
+            u_id=new_user.u_id,
             username=new_user.username,
             email=new_user.email,
             disabled=new_user.disabled,

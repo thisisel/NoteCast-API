@@ -1,6 +1,6 @@
-class TimestampConverter:
+class TimeUtils:
 
-    from note_cast.api.graphql.inputs import EpisodeTimestamp
+    from note_cast.schemas.podcast import EpisodeTimestamp
 
     @staticmethod
     def timestamp_to_millies(ep_timestamp: EpisodeTimestamp) -> int:
@@ -20,10 +20,3 @@ class TimestampConverter:
     @staticmethod
     def seconds_to_millies(seconds: int) -> int:
         return seconds * 1000
-
-
-def get_random_filename(ext: str = "mp3"):
-    import secrets
-
-    random_hex = secrets.token_hex(8)
-    return f"{random_hex}.{ext}"

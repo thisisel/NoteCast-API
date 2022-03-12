@@ -1,15 +1,20 @@
-import os
+import sys
 
 import redis
 from rq import Worker, Queue, Connection
-# from note_cast.core.settings import settings
 
-listen = ['transcript', 'default']
 
-# redis_conn = redis.from_url(settings.REDIS_URL)
 redis_conn = redis.from_url('redis://localhost:6379')
+listen = ['cpu', 'network', 'hybrid']
+
 
 if __name__ == '__main__':
-    with Connection(redis_conn):
-        worker = Worker(map(Queue, listen))
-        worker.work(with_scheduler=True)
+
+    queue_name = sys.argv[1]
+   
+    if queue_name in listen:
+        with Connection(redis_conn):  
+            worker = Worker(map(Queue, [queue_name]))
+            worker.work(with_scheduler=True)
+    else:
+        print('invalid queue name passed')

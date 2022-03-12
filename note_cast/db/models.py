@@ -66,6 +66,7 @@ class ReplyRel(BaseNoteActionRel):
 
 
 class AnnotateRel(BaseNoteActionRel):
+    date_created = DateTimeProperty(default_now=True)
     ...
 
 
