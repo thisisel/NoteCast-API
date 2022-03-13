@@ -1,11 +1,13 @@
 # Custom Logger Using Loguru
-from functools import lru_cache
-
 import logging
-
+import os
+from functools import lru_cache
 from pathlib import Path
+
 from loguru import logger
 from note_cast.core.settings import loguru_conf
+
+base_dir = os.path.abspath(os.path.dirname(__file__))
 
 
 class InterceptHandler(logging.Handler):
@@ -35,10 +37,10 @@ class InterceptHandler(logging.Handler):
 
 class CustomizeLogger:
     @classmethod
-    def make_logger(cls, logger_name: dict = dict(app_logger='uvicorn.access')):
+    def make_logger(cls, logger_name: dict = dict(app_logger="uvicorn.access")):
 
         logger = cls.customize_logging(
-            Path(loguru_conf.PATH).joinpath(loguru_conf.FILENAME),
+            filepath=Path(base_dir).joinpath(loguru_conf.FILENAME),
             level=loguru_conf.LEVEL,
             retention=loguru_conf.RETENTION,
             rotation=loguru_conf.ROTATION,
@@ -56,7 +58,7 @@ class CustomizeLogger:
         rotation: str,
         retention: str,
         format: str,
-        logger_name : dict,
+        logger_name: dict,
     ):
 
         logging.basicConfig(handlers=[InterceptHandler()], level=0)
@@ -64,10 +66,8 @@ class CustomizeLogger:
         # for name in logging.root.manager.loggerDict.keys():
         #     print(name)
 
+        if name := logger_name.get("app_logger", None):
 
-
-        if (name := logger_name.get('app_logger' , None)):
-            
             logging.getLogger(name).handlers = [InterceptHandler()]
 
             for _log in ["uvicorn", "uvicorn.error", "fastapi"]:
@@ -90,8 +90,8 @@ class CustomizeLogger:
             try:
                 # logging.getLogger(name).handlers = []
                 # logging.getLogger(logger_name['rq.worker']).handlers = [InterceptHandler()]
-                logging.getLogger(logger_name['rq.worker']).propagate = True
-            
+                logging.getLogger(logger_name["rq.worker"]).propagate = True
+
             except KeyError as exc:
                 raise exc
 
@@ -100,9 +100,11 @@ class CustomizeLogger:
 def get_logger():
     return CustomizeLogger.make_logger()
 
+
 @lru_cache
 def get_worker_logger():
-    return CustomizeLogger.make_logger(logger_name={'rq.worker':'rq.worker'})
+    return CustomizeLogger.make_logger(logger_name={"rq.worker": "rq.worker"})
+
 
 loguru_app_logger = get_logger()
 loguru_worker_logger = get_worker_logger()
