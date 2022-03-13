@@ -3,9 +3,9 @@ import sys
 import redis
 from rq import Worker, Queue, Connection
 
-
-redis_conn = redis.from_url('redis://localhost:6379')
-listen = ['cpu', 'network', 'hybrid']
+from note_cast.core.settings import settings
+redis_conn = redis.from_url(settings.REDIS_URL)
+listen = settings.REDIS_LISTEN
 
 
 if __name__ == '__main__':

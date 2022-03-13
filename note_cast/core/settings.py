@@ -1,7 +1,7 @@
 import os
 import secrets
 from functools import lru_cache
-from typing import Union
+from typing import Union, List, Literal
 
 from dotenv import load_dotenv
 from pydantic import BaseModel, BaseSettings, HttpUrl
@@ -39,6 +39,7 @@ class Settings(BaseSettings):
     NEO4J_PASSWORD: str = config("NEO4J_PASSWORD")
 
     REDIS_URL: str = config("REDIS_URL", default="redis://localhost:6379")
+    REDIS_LISTEN : List[str] = ['cpu', 'network', 'hybrid']
 
     CLOUDINARY_CLOUD_NAME: str = config("CLOUDINARY_CLOUD_NAME")
     CLOUDINARY_API_KEY: str = config("CLOUDINARY_API_KEY")
