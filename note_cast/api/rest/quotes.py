@@ -35,18 +35,6 @@ def read_quote(q_id: str = Path(..., description="quote id of the requested note
     ...
 
 
-@router.put(
-    "/{q_id}",
-    description="update a particular quote with a ['bookmark'] reaction",
-    tags=["quotes"],
-)
-def update_bookmark_quote(
-    q_id: str = Path(..., description="quote id of the requested notes"),
-    user=Depends(manager),
-):
-    ...
-
-
 @router.get(
     "/{q_id}/notes",
     description="read all the notes about a particular quote",
@@ -68,18 +56,5 @@ def read_note(
     q_id: str = Path(..., description="quote id of the requested notes"),
     n_id: str = Path(...),
     author: dict = Depends(user_query_params),
-):
-    ...
-
-
-@router.put(
-    "/{q_id}/notes/{n_id}",
-    description="update with a reaction ['like' | 'comment'] to particular note",
-    tags=["notes"],
-)
-def update_note_reaction(
-    q_id: str = Path(..., description="quote id of the requested notes"),
-    n_id: str = Path(...),
-    user=Depends(manager),
 ):
     ...
