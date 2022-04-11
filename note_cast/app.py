@@ -2,12 +2,13 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from starlette.middleware.cors import CORSMiddleware
 
+from note_cast.api.errors import http_error_handler
 from note_cast.security.login_manager import manager
 
-from .api.api_v1 import graphql_router, rest_api_router
+from .api.api_v1 import rest_api_router
 from .core.settings import settings
 
 
@@ -18,16 +19,17 @@ def create_app() -> FastAPI:
 
     import note_cast.db
 
+    app.add_exception_handler(HTTPException, http_error_handler)
+
     manager.useRequest(app)
 
     app.include_router(rest_api_router, prefix=settings.API_ROOT_PREFIX)
-    app.include_router(
-        graphql_router, prefix=settings.API_ROOT_PREFIX + "/graphql", tags=["graphql"]
-    )
 
     app.add_api_route(
         path="/",
-        endpoint=lambda: dict(status=True, project=settings.PROJECT_NAME, version=settings.VERSION),
+        endpoint=lambda: dict(
+            status=True, project=settings.PROJECT_NAME, version=settings.VERSION
+        ),
         status_code=200,
         methods=["get"],
         include_in_schema=False,

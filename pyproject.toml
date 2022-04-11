@@ -24,6 +24,7 @@ aioredis = {extras = ["hiredis"], version = "^2.0.1"}
 cloudinary = "^1.29.0"
 h2 = "^4.1.0"
 typer = "^0.4.0"
+python-graphql-client = "^0.4.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

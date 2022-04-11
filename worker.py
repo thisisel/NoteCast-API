@@ -17,5 +17,7 @@ if __name__ == "__main__":
         with Connection(redis_conn):
             worker = Worker(map(Queue, [queue_name]))
             worker.work(with_scheduler=True)
+            # worker.clean_registries()
     else:
-        print("invalid queue name passed")
+        print(f"An invalid queue name passed -> queue name = {queue_name}")
+        print(f"Valid queue names include: {listen}")

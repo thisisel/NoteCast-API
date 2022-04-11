@@ -1,21 +1,23 @@
-from fastapi import HTTPException, status, Request
-from fastapi.responses import JSONResponse
+from typing import Any, Union
+
+from fastapi import status
+
+from .custom_http_exc import CustomHTTPException
 
 
-class UnAuthorized(HTTPException):
-    def __init__(self, category: str = "user_401", message: str = "User is not authorized"):
-        super().__init__(status_code=status.HTTP_401_UNAUTHORIZED)
-        self.category: str = category
-        self.status: bool = False
-        self.message: str = message
-
-
-async def unauthorized_error_handler(_: Request, exc: UnAuthorized) -> JSONResponse:
-    return JSONResponse(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        content={
-            "status": exc.status,
-            "category": exc.category,
-            "message": exc.message,
-        },
-    )
+class InvalidCredentialsExc(CustomHTTPException):
+    def __init__(
+        self,
+        detail: Union[str, None] = "Invalid credentials",
+        headers: Union[dict, None] = {"WWW-Authenticate": "Bearer"},
+        status_code: int = status.HTTP_401_UNAUTHORIZED,
+        category: Union[str, None] = None,
+        errors: Any = None,
+    ):
+        super().__init__(
+            headers=headers,
+            status_code=status_code,
+            detail=detail,
+            category=category,
+            errors=errors,
+        )

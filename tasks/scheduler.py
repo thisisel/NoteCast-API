@@ -32,7 +32,7 @@ def pull_transcript(p_id: str, e_id: str, q_id: str, transcript: str):
         print(x)
 
 
-def schedule_transcript_job(seconds, *args, **kwargs):
+def schedule_pulling_transcription(seconds, *args, **kwargs):
     job = network_queue.enqueue_in(
         timedelta(seconds=seconds), pull_transcript, *args, **kwargs
     )

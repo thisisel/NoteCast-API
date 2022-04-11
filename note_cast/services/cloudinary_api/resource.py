@@ -5,7 +5,7 @@ from cloudinary.exceptions import Error
 from fastapi import HTTPException
 from httpx import HTTPError, Response
 from note_cast.log.custom_logging import loguru_app_logger
-from note_cast.utils.http import httpx_client
+from note_cast.utils.http import httpx_client_factory
 
 
 class CloudinaryResource:
@@ -24,9 +24,10 @@ class CloudinaryResource:
     # TODO move to tasks
     @classmethod
     def download_resource(cls, url):
+        client = httpx_client_factory()
         try:
 
-            with httpx_client as client:
+            with client:
 
                 r: Response = client.get(url)
 
@@ -47,7 +48,7 @@ class CloudinaryResource:
 
         try:
             resource_info_response = cls.get_resource_info(
-                public_id=public_id, resource_type="raw"
+                public_id=public_id, resource_type=resource_type
             )
             resource_data = cls.download_resource(resource_info_response["url"])
             resource_data_jsn = resource_data.json()
@@ -58,7 +59,7 @@ class CloudinaryResource:
             raise HTTPException(status_code=500)
       
         except KeyError as k_err:
-            loguru_app_logger.exception(err)
+            loguru_app_logger.exception(k_err)
             raise HTTPException(status_code=500)
         
         return transcript

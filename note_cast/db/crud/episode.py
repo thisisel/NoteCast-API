@@ -1,4 +1,4 @@
-from ..models import Episode
+from ..models import Episode, Podcast
 
 
 class EpisodeQuery:
@@ -13,5 +13,9 @@ class EpisodeQuery:
         )
 
     @staticmethod
-    def create_episode(e_id : str, e_title : str, e_listennotes_url : str, audio_url : str, **kwargs):
-        return Episode(e_id=e_id, e_title=e_title, e_listennotes_url=e_listennotes_url, audio_url=audio_url).save()
+    def create_episode(e_id : str, e_title : str, audio_url : str, **kwargs):
+        return Episode(e_id=e_id, e_title=e_title, audio_url=audio_url, **kwargs).save()
+
+    @classmethod
+    def get_source_podcast_or_none(cls, episode: Episode)-> Podcast:
+        return episode.published_for.single()

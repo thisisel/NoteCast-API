@@ -5,11 +5,12 @@ from tasks import (cpu_queue, get_current_job, get_first_dependent_result, job,
 @job(network_queue)
 def get_content(url: str):
     from note_cast.utils import (ConnectTimeout, HTTPStatusError, Response,
-                                    httpx_client)
-
+                                    httpx_client_factory)
+    
+    client = httpx_client_factory()
     try:
         # TODO timeout = httpx.Timeout(read=240.0)
-        with httpx_client as client:
+        with client:
             r: Response = client.get(url=url, timeout=None)
             return r.content
 

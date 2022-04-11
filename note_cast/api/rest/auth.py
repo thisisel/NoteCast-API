@@ -1,57 +1,75 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
-from fastapi_login.exceptions import InvalidCredentialsException
+from neomodel.exceptions import UniqueProperty
+from note_cast.api.errors import CustomHTTPException
 from note_cast.app import manager as login_manager
-from note_cast.db.crud.user import load_user
-from note_cast.db.models import User
-from note_cast.schemas.response import (
-    RestRegisterSuccessResp,
-    RestLoginSuccessResp,
-    UserPydantic,
-    BaseUserPydantic,
-    ApiErrorResponse,
-)
-
-router = APIRouter()
+# from note_cast.security.login_manager import manager
+from note_cast.db.crud import User, load_user
+from note_cast.log.custom_logging import loguru_app_logger
+# from note_cast.schemas.responses import (ApiBaseResponse, ApiErrorResponse,
+#                                         BaseUserPydantic, RestLoginSuccessResp,
+#                                         UserPydantic)
+from note_cast.schemas import ApiBaseResponse, ApiErrorResponse, BaseUserPydantic, RestLoginSuccessResp, UserPydantic
+router = APIRouter(tags=["auth"])
 
 
-@router.post("/login", 
+@router.post(
+    "/login",
     responses={
-        201: {"model": RestLoginSuccessResp},
-        400: {"model": ApiErrorResponse},
+        200: {"model": RestLoginSuccessResp},
+        401: {"model": ApiErrorResponse},
     },
-    )
+    response_model_exclude_unset=True,
+)
 def login(data: OAuth2PasswordRequestForm = Depends()):
     email = data.username
     password = data.password
 
     if not (user := load_user(email)):
-        raise InvalidCredentialsException
+        raise CustomHTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Wrong username",
+            category="Invalid credentials",
+        )
 
     elif not user.verify_password(password):
-        raise InvalidCredentialsException
+        raise CustomHTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Wrong password",
+            category="Invalid credentials",
+        )
 
-    user_pydantic = BaseUserPydantic(u_id=user.u_id, username=user.username, email=email)
+    user_pydantic = BaseUserPydantic(
+        u_id=user.u_id, username=user.username, email=email
+    )
     access_token = login_manager.create_access_token(data={"sub": email})
 
-    return RestLoginSuccessResp(
-        status=True, message="Successful login", user=user_pydantic, token=access_token
+    # TODO add no cache header
+    result = RestLoginSuccessResp(
+        status=True,
+        message="Successful login",
+        user=user_pydantic,
+        access_token=access_token,
+    )
+
+    return JSONResponse(
+        status_code=status.HTTP_200_OK, content=jsonable_encoder(result)
     )
 
 
-@router.post("/register",     
+@router.post(
+    "/register",
     responses={
-        200: {"model": RestRegisterSuccessResp},
+        201: {"model": ApiBaseResponse},
         400: {"model": ApiErrorResponse},
-    },)
+    },
+    response_model_exclude_unset=True,
+)
 def register(data: OAuth2PasswordRequestForm = Depends()):
     email = data.username
     password = data.password
-
-    if (user := load_user(email)) is not None:
-        return ApiErrorResponse(
-            category="user_exists", message=f"A user with {email} already exists!"
-        )
 
     try:
         new_user: User = User(username=email, email=email, password=password).save()
@@ -63,10 +81,19 @@ def register(data: OAuth2PasswordRequestForm = Depends()):
             joined_date=new_user.joined_date,
         )
 
-    except Exception as ex:
-        print(ex)
-        return {"exp": "ex"}
+    except UniqueProperty as exc:
+        raise CustomHTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"A user with {email} already exists!",
+        )
 
-    return RestRegisterSuccessResp(
-        status=True, message="Successful Registration", user=new_user_pydantic
+    except Exception as ex:
+        loguru_app_logger.exception(ex)
+        raise CustomHTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    result: ApiBaseResponse = ApiBaseResponse(
+        message="Successful registration", data=new_user_pydantic.dict()
+    )
+    return JSONResponse(
+        status_code=status.HTTP_201_CREATED, content=jsonable_encoder(result)
     )

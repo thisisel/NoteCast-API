@@ -1,6 +1,6 @@
 class TimeUtils:
 
-    from note_cast.schemas.podcast import EpisodeTimestamp
+    from note_cast.schemas import EpisodeTimestamp
 
     @staticmethod
     def timestamp_to_millies(ep_timestamp: EpisodeTimestamp) -> int:

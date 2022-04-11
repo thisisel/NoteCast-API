@@ -1,0 +1,78 @@
+[
+  {
+    "_id": "76aa13a5-f5ae-40d4-9221-d1b27ecef8e4",
+    "colName": "note-cast-rest-api-v0.0.1",
+    "created": "2022-03-22T20:26:03.865Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "ec6ebba5-9174-4034-b9fc-86baf44f43a8",
+        "name": "auth",
+        "containerId": "",
+        "created": "2022-03-22T20:38:28.749Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "50b57ab3-88f5-4845-95f0-4e86603995a6",
+        "name": "annotations",
+        "containerId": "",
+        "created": "2022-03-22T20:39:21.634Z",
+        "sortNum": 20000
+      },
+      {
+        "_id": "b0f93b65-b015-44b1-9ea5-c0f356ef2ac6",
+        "name": "podcast",
+        "containerId": "",
+        "created": "2022-03-29T06:00:45.274Z",
+        "sortNum": 30000
+      },
+      {
+        "_id": "cd469a91-e678-4b9a-90b4-0afb7b9c497c",
+        "name": "notes",
+        "containerId": "50b57ab3-88f5-4845-95f0-4e86603995a6",
+        "created": "2022-04-09T03:53:29.562Z",
+        "sortNum": 40000
+      },
+      {
+        "_id": "1f27aef9-6773-4d04-afcb-912ee1b2119f",
+        "name": "profile",
+        "containerId": "cd469a91-e678-4b9a-90b4-0afb7b9c497c",
+        "created": "2022-04-09T03:53:40.535Z",
+        "sortNum": 50000
+      },
+      {
+        "_id": "4879b27d-ccf1-4f8a-a1f0-a00207441f70",
+        "name": "users",
+        "containerId": "cd469a91-e678-4b9a-90b4-0afb7b9c497c",
+        "created": "2022-04-09T03:53:54.333Z",
+        "sortNum": 60000
+      },
+      {
+        "_id": "e9b26b0a-6783-4a1b-a759-a419e1ff4d91",
+        "name": "bookmarks",
+        "containerId": "50b57ab3-88f5-4845-95f0-4e86603995a6",
+        "created": "2022-04-09T03:54:10.635Z",
+        "sortNum": 70000
+      }
+    ],
+    "settings": {
+      "headers": [],
+      "auth": {
+        "type": "oauth2",
+        "oauth2": {
+          "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHcmVnX0hhY2tldHRAaG90bWFpbC5jb20iLCJleHAiOjE2NDk1Nzg4NTF9.CVwzDA4bfVmTzUfvw6iFfgpBT4nfxstQTHPJW-9ADm0",
+          "grantType": "password",
+          "authUrl": "http://0.0.0.0:8000//api/rest/login",
+          "tokenUrl": "http://0.0.0.0:8000/api/rest/login",
+          "clientId": "",
+          "clientSecret": "",
+          "clientAuth": "in-body",
+          "username": "{{username}}",
+          "password": "{{password}}"
+        }
+      },
+      "tests": [],
+      "envId": "d2097f7f-cb8b-4aa4-af38-701fcd7aa11c"
+    }
+  }
+]

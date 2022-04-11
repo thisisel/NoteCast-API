@@ -10,5 +10,8 @@ cloudinary.config(
 
 notification_url = settings.CLOUDINARY_NOTIFICATION_URL
 cloudinary_folder = settings.CLOUDINARY_FOLDER
+raw_convert = settings.CLOUDINARY_RAW_CONVERT
+async_upload = settings.CLOUDINARY_ASYNC_UPLOAD
+
 asset_folder_path = lambda p_id, e_id : f"{cloudinary_folder}/{p_id}/{e_id}/"
 
