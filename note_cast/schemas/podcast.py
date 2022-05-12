@@ -14,5 +14,5 @@ class BasePodcast(BaseModel):
     image_url: Optional[HttpUrl] = None
     feed_url: Optional[HttpUrl] = None
     description: Optional[str] = None
-    external_ids: Optional[ExternalIDs]
-    external_urls: Optional[ExternalURLs]
+    external_ids: Optional[ExternalIDs] = None
+    external_urls: Optional[ExternalURLs] = None

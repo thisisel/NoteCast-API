@@ -11,10 +11,10 @@ from .podcast import BasePodcast
 class BaseEpisode(BaseModel):
     e_id: int
     e_title: str
-    image_url: Optional[HttpUrl]
-    audio_url: Optional[HttpUrl]
-    length_s: Optional[int]
-    description: Optional[str]
+    image_url: Optional[HttpUrl] = None
+    audio_url: Optional[HttpUrl] = None
+    length_s: Optional[int] = None
+    description: Optional[str] = None
     podcast: Optional[BasePodcast]
-    external_ids: Optional[ExternalIDs]
-    external_urls: Optional[ExternalURLs]
+    external_ids: Optional[ExternalIDs] = None
+    external_urls: Optional[ExternalURLs] = None

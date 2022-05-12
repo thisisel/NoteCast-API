@@ -55,11 +55,11 @@ def read_single_podcast(p_id: str):
 def read_podcast_episodes_collection(p_id: str, request: Request):
 
     # TODO redirect to /api/rest/episodes?p_id=p_id
-    endpoint = request.url_for("search_episode")
+    next_endpoint = request.url_for("search_episode")
     query_params = f"?p_id={p_id}"
-    url = endpoint + query_params
+    next_url = next_endpoint + query_params
 
-    return url
+    return next_url
 
 
 @router.get(
@@ -70,11 +70,11 @@ def read_podcast_episodes_collection(p_id: str, request: Request):
 )
 def read_podcast_quotes_collection(p_id: str, request: Request):
     # TODO redirect to /api/rest/quotes?p_id=p_id
-    endpoint = request.url_for("search_quotes")
+    next_endpoint = request.url_for("search_quotes")
     query_params = f"?p_id={p_id}"
-    url = endpoint + query_params
+    next_url = next_endpoint + query_params
 
-    return url
+    return next_url
 
 
 @router.get(
@@ -85,8 +85,8 @@ def read_podcast_quotes_collection(p_id: str, request: Request):
 )
 def read_podcast_notes_collection(p_id: str, request: Request):
     # TODO redirect to /api/rest/notes?p_id=p_id
-    endpoint = request.url_for("search_notes")
+    next_endpoint = request.url_for("search_notes")
     query_params = f"?p_id={p_id}"
-    url = endpoint + query_params
+    next_url = next_endpoint + query_params
 
-    return url
+    return next_url

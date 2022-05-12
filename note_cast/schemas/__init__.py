@@ -8,9 +8,10 @@
 
 
 from . responses import ApiBaseResponse, ApiErrorResponse, CloudinarySuccessResponse, RestLoginSuccessResp
+from . pagination import PaginatorInfo
 from . user import BaseUserPydantic, UserPydantic
 from . annotation import CreateAnnotation, CreateNote, BaseNote, SingleNote, Annotation, NoteCollection
+from . mixins import ExternalIDs, ExternalURLs
 from . episode import BaseEpisode
 from . podcast import BasePodcast
 from . quote import EpisodeTimestamp, NewQuoteMetadata, BaseQuote, QuoteMetadata, MentionRel
-

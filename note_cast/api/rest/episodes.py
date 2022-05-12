@@ -18,6 +18,10 @@ def search_episode(
         },
     ]
     # if p_id -> retrive podcast episodes or 404 if podcast does not exist
+    if (p_id := podcast_q_params.get("p_id")) is not None:
+        pass
+    if (p_title := podcast_q_params.get("p_title")) is not None:
+        pass
     # if e_id -> retrive single episode otr nothing
     return ApiBaseResponse(message="Search episode query completed successfully", data=results)
 

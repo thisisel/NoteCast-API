@@ -12,7 +12,7 @@ from pydantic import BaseModel, Field, HttpUrl
 
 class Quote(BaseModel):
     q_id: str
-    transcript: Optional[str]
+    transcript: Optional[str] = None
     visible: bool = True
 
 
@@ -38,7 +38,7 @@ class NewQuoteMetadata(BaseModel):
 
 class BaseQuote(BaseModel):
     q_id: str
-    transcript: str
+    transcript: Optional[str] = None
 
 
 class QuoteMetadata(BaseQuote):

@@ -1,5 +1,7 @@
 from python_graphql_client import GraphqlClient
 from . import base_graphql_path
+from .. import base_graphql_path
+
 # Create your query or mutation.
 access_token_query = """
 mutation {

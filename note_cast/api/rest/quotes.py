@@ -8,9 +8,6 @@ from note_cast.db.crud import (EpisodeNode, NoteNode, NoteQuery, PodcastNode,
 from note_cast.schemas import (Annotation, ApiBaseResponse, BaseEpisode,
                                BaseNote, BasePodcast, BaseUserPydantic,
                                CreateAnnotation, QuoteMetadata)
-# from note_cast.schemas.quote import QuoteMetadata
-# from note_cast.schemas.responses import ApiBaseResponse
-# from note_cast.schemas.user import BaseUserPydantic
 from note_cast.security.login_manager import manager
 from note_cast.utils.dependencies.query_params import (episode_query_params,
                                                        podcast_query_params,
@@ -32,7 +29,7 @@ def search_quotes(
 
     ...
 
-
+#TODO rewrite dependency:submit quote for testing 
 @router.post(
     "/",
     description="Book mark or annotate a new quote",

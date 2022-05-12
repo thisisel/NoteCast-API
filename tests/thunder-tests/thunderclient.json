@@ -118,7 +118,7 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-03-22T20:26:03.868Z",
-    "modified": "2022-04-08T19:37:48.971Z",
+    "modified": "2022-04-11T04:10:52.869Z",
     "headers": [],
     "params": [],
     "body": {
@@ -127,21 +127,21 @@
       "form": [
         {
           "name": "username",
-          "value": "{{username}}",
-          "isDisabled": true
+          "value": "{{username}}"
         },
         {
           "name": "password",
-          "value": "{{password}}",
-          "isDisabled": true
+          "value": "{{password}}"
         },
         {
           "name": "username",
-          "value": "elahemaruf@gmail.com"
+          "value": "elahemaruf@gmail.com",
+          "isDisabled": true
         },
         {
           "name": "password",
-          "value": "heyyouputthere111"
+          "value": "heyyouputthere111",
+          "isDisabled": true
         }
       ]
     },
@@ -185,9 +185,9 @@
     "name": "add note to fresh quote.OK",
     "url": "{{base_url}}/api/rest/quotes/",
     "method": "POST",
-    "sortNum": 50000,
+    "sortNum": 10000,
     "created": "2022-03-22T20:40:32.117Z",
-    "modified": "2022-04-09T03:55:30.653Z",
+    "modified": "2022-04-22T14:37:31.683Z",
     "headers": [],
     "params": [],
     "body": {
@@ -198,7 +198,7 @@
     "auth": {
       "type": "oauth2",
       "oauth2": {
-        "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHcmVnX0hhY2tldHRAaG90bWFpbC5jb20iLCJleHAiOjE2NDkzNjA1OTB9.BYGAA0y2iXXMNY54IE4CJzT3Bp6XgPcf5JVor-2I_lY",
+        "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHcmVnX0hhY2tldHRAaG90bWFpbC5jb20iLCJleHAiOjE2NTA2MzkxNTB9.Z5FAJgTPE3dJpBOtpYKIRd63KjL8oJ98RGJGJI3S6TE",
         "grantType": "password",
         "tokenUrl": "{{base_url}}/api/rest/login",
         "clientId": "",
@@ -268,13 +268,13 @@
     "method": "GET",
     "sortNum": 20000,
     "created": "2022-03-23T05:20:27.666Z",
-    "modified": "2022-04-10T19:42:51.400Z",
+    "modified": "2022-04-11T04:12:58.781Z",
     "headers": [],
     "params": [],
     "auth": {
       "type": "oauth2",
       "oauth2": {
-        "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHcmVnX0hhY2tldHRAaG90bWFpbC5jb20iLCJleHAiOjE2NDk2MjA2NzB9.wg7jAiNudLkRO0kbnHKUm6VIuyHm1-ZN5flQG5VcCP4",
+        "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHcmVnX0hhY2tldHRAaG90bWFpbC5jb20iLCJleHAiOjE2NDk2NTEyNzd9.8IWJaFnMra0yuoXoZvWj7ueNA77Jl29FPPwICv13wJc",
         "grantType": "password",
         "tokenUrl": "{{base_url}}/api/rest/login",
         "clientId": "",
@@ -304,16 +304,16 @@
     "colId": "76aa13a5-f5ae-40d4-9221-d1b27ecef8e4",
     "containerId": "b0f93b65-b015-44b1-9ea5-c0f356ef2ac6",
     "name": "search_podcast.OK",
-    "url": "{{base_url}}/api/rest/podcasts/?term=bplus",
+    "url": "{{base_url}}/api/rest/podcasts/?term=hidden brain",
     "method": "GET",
     "sortNum": 70000,
     "created": "2022-03-29T06:01:01.567Z",
-    "modified": "2022-04-01T11:42:25.837Z",
+    "modified": "2022-04-11T04:04:53.448Z",
     "headers": [],
     "params": [
       {
         "name": "term",
-        "value": "bplus",
+        "value": "hidden brain",
         "isPath": false
       }
     ],
@@ -354,9 +354,9 @@
     "name": "add note on existing quote",
     "url": "{{base_url}}/api/rest/profile/notes/",
     "method": "POST",
-    "sortNum": 40000,
+    "sortNum": 15000,
     "created": "2022-04-08T19:40:51.841Z",
-    "modified": "2022-04-09T03:55:23.591Z",
+    "modified": "2022-04-11T04:00:28.301Z",
     "headers": [],
     "params": [],
     "body": {
@@ -419,9 +419,9 @@
     "name": "read a single note on profile",
     "url": "{{base_url}}/api/rest/profile/notes/8fb505745e44480d8bbfc89ab69fda70",
     "method": "GET",
-    "sortNum": 10000,
+    "sortNum": 25000,
     "created": "2022-04-08T20:53:49.458Z",
-    "modified": "2022-04-09T03:55:00.888Z",
+    "modified": "2022-04-11T03:46:49.950Z",
     "headers": [],
     "params": [],
     "auth": {
@@ -444,29 +444,29 @@
     "colId": "76aa13a5-f5ae-40d4-9221-d1b27ecef8e4",
     "containerId": "1f27aef9-6773-4d04-afcb-912ee1b2119f",
     "name": "update a single note text on profile ",
-    "url": "{{base_url}}/api/rest/profile/notes/8fb505745e44480d8bbfc89ab69fda70",
+    "url": "{{base_url}}/api/rest/profile/notes/b911d89c9a37446d823e68b6c41edbc4",
     "method": "PUT",
     "sortNum": 30000,
     "created": "2022-04-08T21:00:55.848Z",
-    "modified": "2022-04-09T03:55:14.788Z",
+    "modified": "2022-04-11T04:13:57.073Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"text\": \"Rendered her for put improved concerns his. Ladies bed wisdom theirs mrs men months set. Everything so dispatched as it increasing pianoforte. Hearing now saw perhaps minutes herself his. Of instantly excellent therefore difficult he northward. \",\n  \"is_public\": true\n}",
+      "raw": "{\n  \"text\": \"Rendered her for put improved concerns his. Ladies bed wisdom theirs mrs men months set. Everything so dispatched as it increasing pianoforte. Hearing now saw perhaps minutes herself his. Of instantly excellent d. \",\n  \"is_public\": true\n}",
       "form": []
     },
     "auth": {
       "type": "oauth2",
       "oauth2": {
-        "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGFoZW1hcnVmQGdtYWlsLmNvbSIsImV4cCI6MTY0OTQ1MzMzN30.pDkXhm6_sXcIs9HpX6jGfPVZ0P32edlruEgWBAIsSG4",
+        "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHcmVnX0hhY2tldHRAaG90bWFpbC5jb20iLCJleHAiOjE2NDk2NTEzMzZ9.fsvU7ZgmHzsFZHG4e_KMihU3MTIAc-x73biO9UcRQn8",
         "grantType": "password",
         "tokenUrl": "{{base_url}}/api/rest/login",
         "clientId": "",
         "clientSecret": "",
         "clientAuth": "in-header",
-        "username": "{{username1}}",
-        "password": "{{password1}}"
+        "username": "{{username}}",
+        "password": "{{password}}"
       }
     },
     "tests": []
@@ -584,24 +584,24 @@
     "colId": "76aa13a5-f5ae-40d4-9221-d1b27ecef8e4",
     "containerId": "1f27aef9-6773-4d04-afcb-912ee1b2119f",
     "name": "remove a note from profile",
-    "url": "{{base_url}}/api/rest/profile/notes/8fb505745e44480d8bbfc89ab69fda70",
+    "url": "{{base_url}}/api/rest/profile/notes/b911d89c9a37446d823e68b6c41edbc4",
     "method": "DELETE",
     "sortNum": 100000,
     "created": "2022-04-09T04:03:01.731Z",
-    "modified": "2022-04-09T04:03:01.731Z",
+    "modified": "2022-04-11T04:14:20.543Z",
     "headers": [],
     "params": [],
     "auth": {
       "type": "oauth2",
       "oauth2": {
-        "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbGFoZW1hcnVmQGdtYWlsLmNvbSIsImV4cCI6MTY0OTQ1MzQwMn0.6o35SA0kd_hcvQL-9uJAm6X3oLv2-Rl3cP9li58QypM",
+        "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHcmVnX0hhY2tldHRAaG90bWFpbC5jb20iLCJleHAiOjE2NDk2NTEzNTl9.jc4I2ieNBh0ocINeXYvdq-XOCTF2gWPM6N5s37UXY5o",
         "grantType": "password",
         "tokenUrl": "{{base_url}}/api/rest/login",
         "clientId": "",
         "clientSecret": "",
         "clientAuth": "in-header",
-        "username": "{{username1}}",
-        "password": "{{password1}}"
+        "username": "{{username}}",
+        "password": "{{password}}"
       }
     },
     "tests": []
