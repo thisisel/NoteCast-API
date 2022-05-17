@@ -1,7 +1,8 @@
 import pytest
 from httpx import Response
 from note_cast.log.custom_logging import loguru_app_logger
-from note_cast.services.podchaser_api.rest import PodchaserPodcast
+# from note_cast.services.podchaser_api.rest import PodchaserPodcast
+from note_cast.services.podchaser_api import PodchaserPodcastRequests
 
 
 def test_request_search_podcast_term():
@@ -10,7 +11,7 @@ def test_request_search_podcast_term():
     WHEN sending request to podchaser rest api for search query
     THEN return at least 1 json result(s)
     """
-    response: Response = PodchaserPodcast._request_search_podcast_term(
+    response: Response = PodchaserPodcastRequests._request_search_podcast_term(
         term="Hidden", start=0, count=25
     )
 
@@ -29,7 +30,7 @@ def test_request_get_single_podcast():
     WHEN sending request to podchaser rest api
     THEN return single podcast requested
     """
-    response: Response = PodchaserPodcast._request_get_single_podcast(p_id=687224)
+    response: Response = PodchaserPodcastRequests._request_get_single_podcast(p_id=687224)
     assert response.status_code == 200
 
     response_content = response.json()
@@ -49,7 +50,7 @@ d = {
 def test_get_single_podcast(test_id, expected):
     from note_cast.schemas import BasePodcast
 
-    result = PodchaserPodcast.get_single_podcast(p_id=test_id)
+    result = PodchaserPodcastRequests.get_single_podcast(p_id=test_id)
     assert isinstance(result, BasePodcast)
 
 

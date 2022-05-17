@@ -13,6 +13,7 @@ class BasePodcast(BaseModel):
     p_title: str
     image_url: Optional[HttpUrl] = None
     feed_url: Optional[HttpUrl] = None
+    web_url: Optional[HttpUrl] = None
     description: Optional[str] = None
     external_ids: Optional[ExternalIDs] = None
     external_urls: Optional[ExternalURLs] = None

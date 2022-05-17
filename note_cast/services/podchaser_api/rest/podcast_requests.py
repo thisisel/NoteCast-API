@@ -6,10 +6,14 @@ from httpx._exceptions import HTTPStatusError
 from note_cast.api.errors import CustomHTTPException
 from note_cast.log.custom_logging import loguru_app_logger
 from note_cast.schemas import BasePodcast
-from .. import base_url, headers, httpx_client_factory
+# from note_cast.services.podchaser_api import base_url, headers, httpx_client_factory
+from . import httpx_client_factory
+from note_cast.core.settings import PodchaserConfig
 
+base_url = PodchaserConfig.BASE_URL
+headers = PodchaserConfig.HEADERS
 
-class PodchaserPodcast:
+class PodchaserPodcastRequests:
     @classmethod
     def _request_search_podcast_term(cls, term: str, start: int, count: int):
 

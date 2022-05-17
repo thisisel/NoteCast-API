@@ -6,6 +6,7 @@ from note_cast.utils import PasswordManager
 
 
 class PublishRel(StructuredRel):
+    #TODO rename to air_date
     date = DateTimeProperty(default_now=True)
 
 
@@ -101,6 +102,7 @@ class Podcast(StructuredNode, ExternalIDsMixin, MediaAssetsMixin):
     p_id = StringProperty(required=True, index=True)
     p_title = StringProperty(required=True, index=True)
     description = StringProperty()
+    web_url = StringProperty()
 
     category = RelationshipTo(Category, "CATEGORIZED_UNDER")
     episodes = RelationshipFrom("Episode", "PUBLISHED_FOR")

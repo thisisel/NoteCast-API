@@ -1,9 +1,9 @@
-from typing import List
+from typing import List, Tuple
 
 from fastapi import APIRouter, Request, status
 from fastapi.responses import RedirectResponse
 from note_cast.schemas import ApiBaseResponse, ApiErrorResponse, BasePodcast
-from note_cast.services.podchaser_api.rest import PodchaserPodcast
+from note_cast.services.podchaser_api import PodchaserPodcastGQueries
 
 
 router = APIRouter(prefix="/podcasts", tags=["podcast"])
@@ -17,7 +17,8 @@ router = APIRouter(prefix="/podcasts", tags=["podcast"])
 )
 def search_podcast(term: str):
 
-    results: List[BasePodcast] = PodchaserPodcast.search_podcast_term(term=term)
+    # results: List[BasePodcast] = PodchaserPodcast.search_podcast_term(term=term)
+    results, pagination_info = PodchaserPodcastGQueries.search_podcast_term(term=term)
     return ApiBaseResponse(
         message="Search podcast query completed successfully", data=results
     )

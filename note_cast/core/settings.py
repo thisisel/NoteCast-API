@@ -15,7 +15,7 @@ if os.path.exists(dotenv_path):
 config = Config(".env")
 
 
-class CloudinarySettings:
+class CloudinaryConfig:
     CLOUD_NAME: str = config("CLOUDINARY_CLOUD_NAME")
     API_KEY: str = config("CLOUDINARY_API_KEY")
     API_SECRET: str = config("CLOUDINARY_API_SECRET")
@@ -26,6 +26,30 @@ class CloudinarySettings:
     FOLDER: str = config("CLOUDINARY_FOLDER", default="listennotes_segments")
     RAW_CONVERT: bool = config("CLOUDINARY_RAW_CONVERT", default=False)
     ASYNC_UPLOAD: bool = config("CLOUDINARY_ASYNC_UPLOAD", default=True)
+
+class PodchaserConfig:
+    TOKEN : str = config("PODCHASER_TOKEN")
+    BASE_URL : HttpUrl = config("PODCHASER_BASE_URL")
+    HEADERS : dict = {
+        "Authorization": "Bearer " + TOKEN,
+        "Content-Type" : "application/json"
+    }
+    BASE_GQ_PATH : HttpUrl = BASE_URL + "graphql"
+
+    FASTAPI_ENV: str = config("FASTAPI_ENV")
+    
+    if FASTAPI_ENV == "development":
+        PODCHASER_SECRET : Secret = config("PODCHASER_DEV_SECRET", cast=Secret)
+        PODCHASER_KEY : str = config("PODCHASER_DEV_KEY")
+
+    elif FASTAPI_ENV == "testing":
+        raise EnvironmentError
+
+    elif FASTAPI_ENV == "production":
+        PODCHASER_SECRET : Secret = config("PODCHASER_PRO_SECRET", cast=Secret)
+        PODCHASER_KEY : str = config("PODCHASER_PRO_KEY")
+    else:
+        raise Exception(f"Invalid FASTAPI_ENV")
 
 
 class Settings(BaseSettings):
