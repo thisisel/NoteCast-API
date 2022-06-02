@@ -8,7 +8,7 @@ class NoteQuery:
         return Note.nodes.first_or_none(n_id=n_id)
 
     @classmethod
-    def create_note_with_attachments(
+    def create_note_on_quote(
         cls, text: str, is_public: bool, author: User, quote: Quote
     ) -> Note:
         note: Note = Note(text=text, is_public=is_public).save()

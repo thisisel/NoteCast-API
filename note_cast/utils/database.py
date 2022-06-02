@@ -27,7 +27,7 @@ class DataBaseUtils:
             episode := PodcastQuery.get_related_episode(podcast=podcast, e_id=data.e_id)
         ) is None:
             episode: Episode = EpisodeQuery.create_episode(**data.dict())
-            episode.published_for.connect(podcast)
+            episode.published_for.connect(podcast) #TODO provide air date as rel props
 
         quote: Quote = QuoteQuery.create_premature_quote(q_id=asset_public_id)
         quote.mentioned_on.connect(
@@ -41,18 +41,15 @@ class DataBaseUtils:
         from note_cast.db.crud import EpisodeQuery, QuoteQuery
 
         if (
-            parent_episode := QuoteQuery.get_quote_episode_or_none(quote=quote)
+            parent_episode := quote.episode
         ) is None:
             raise CustomHTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 category=EPISODE_404,
                 detail="requested quote is orphan, episode-wise",
             )
-
         if (
-            parent_podcast := EpisodeQuery.get_source_podcast_or_none(
-                episode=parent_episode
-            )
+            parent_podcast := parent_episode.podcast
         ) is None:
             raise CustomHTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,

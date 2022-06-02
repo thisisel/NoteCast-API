@@ -1,11 +1,22 @@
-from note_cast.db.crud import PodcastQuery
-import logging
+from note_cast.db.crud import PodcastQuery , PodcastNode, EpisodeNode
 
-def test_find_podcast_quotes():
-    result = PodcastQuery.get_podcast_quotes(p_id=57847)
+def test_create_podcast():
+    pass
 
-    assert len(result) == 1
 
-    p = result[0]
-    # assert p.q_id == '59e1591cfd3a14ea'
-    logging.debug(result)
+def test_read_podcast():
+    pass
+
+def test_update_podcast():
+    pass
+
+def test_delete_podcast():
+    pass
+
+def test_get_related_quotes():
+    e : EpisodeNode = EpisodeNode.nodes.get(e_id='2515594')
+    assert e.e_id == '2515594'
+
+    q_list = e.quotes_list
+    print(q_list)
+

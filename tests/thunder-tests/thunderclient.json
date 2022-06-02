@@ -308,7 +308,7 @@
     "method": "GET",
     "sortNum": 70000,
     "created": "2022-03-29T06:01:01.567Z",
-    "modified": "2022-04-11T04:04:53.448Z",
+    "modified": "2022-05-24T18:45:23.548Z",
     "headers": [],
     "params": [
       {
@@ -317,18 +317,31 @@
         "isPath": false
       }
     ],
-    "tests": []
+    "tests": [
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "data"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "schema",
+        "value": ""
+      }
+    ]
   },
   {
     "_id": "723abe04-cfb0-4000-a435-60c52289e827",
     "colId": "76aa13a5-f5ae-40d4-9221-d1b27ecef8e4",
     "containerId": "b0f93b65-b015-44b1-9ea5-c0f356ef2ac6",
     "name": "get_single_podcast.OK",
-    "url": "{{base_url}}/api/rest/podcasts/57847/",
+    "url": "{{base_url}}/api/rest/podcasts/73209/",
     "method": "GET",
     "sortNum": 80000,
     "created": "2022-03-29T06:39:28.723Z",
-    "modified": "2022-03-29T06:52:28.529Z",
+    "modified": "2022-05-24T18:44:21.902Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -338,11 +351,11 @@
     "colId": "76aa13a5-f5ae-40d4-9221-d1b27ecef8e4",
     "containerId": "b0f93b65-b015-44b1-9ea5-c0f356ef2ac6",
     "name": "read_podcast_related_episode.ok",
-    "url": "{{base_url}}/api/rest/podcasts/57847/episodes/",
+    "url": "{{base_url}}/api/rest/podcasts/73209/episodes/",
     "method": "GET",
     "sortNum": 90000,
     "created": "2022-03-29T07:09:28.079Z",
-    "modified": "2022-03-29T07:11:16.624Z",
+    "modified": "2022-05-29T07:15:43.303Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -618,6 +631,26 @@
     "modified": "2022-04-10T06:41:28.081Z",
     "headers": [],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "a37c3840-e8fd-4a65-a8e2-f375fa398cc1",
+    "colId": "76aa13a5-f5ae-40d4-9221-d1b27ecef8e4",
+    "containerId": "17d8513b-21ee-4631-a81b-3c5bf153f308",
+    "name": "search_episode",
+    "url": "{{base_url}}/api/rest/episodes/?p_id=73209",
+    "method": "GET",
+    "sortNum": 130000,
+    "created": "2022-05-24T19:08:52.688Z",
+    "modified": "2022-05-24T19:10:11.842Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "p_id",
+        "value": "73209",
+        "isPath": false
+      }
+    ],
     "tests": []
   }
 ]

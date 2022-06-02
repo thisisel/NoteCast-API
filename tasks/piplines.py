@@ -7,10 +7,12 @@ sys.path.append("..")
 
 
 def trigger_transcription_fallback(url: str, q_id: str):
-    """Download audio clip from network 
-       and request transcription from google
-       all tasks performed in the background.
-       Utilizes cpu, network and hybrid queue.
+    """
+       Download audio clip from network 
+       and request transcription from google.
+       All tasks performed in the background.
+       
+        cpu, network and hybrid queue.
 
         1. download resource(network)!!LONG RUNNING
         2. create temp file (cpu)
@@ -20,7 +22,7 @@ def trigger_transcription_fallback(url: str, q_id: str):
     
     Args:
         audio_url (str): http url pattern_
-        q_id (str): id of the quote to be transcripted
+        q_id (str): id of a premature quote waiting for transcription
     """
 
     from tasks.network import get_content

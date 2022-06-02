@@ -16,3 +16,15 @@ def get_login_manager():
 
 
 manager = get_login_manager()
+
+
+# @manager.user_loader()
+# def load_user(user_id: str):
+#     """
+#     Get a user from the db
+#     :param user_id: E-Mail of the user
+#     :return: None or the user object
+#     """
+#     from note_cast.db._models import User
+
+#     return User.nodes.get_or_none(email=user_id)

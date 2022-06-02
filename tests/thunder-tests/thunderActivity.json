@@ -627,7 +627,7 @@
     "method": "GET",
     "sortNum": 0,
     "created": "2022-03-31T19:17:28.160Z",
-    "modified": "2022-04-11T04:04:53.452Z",
+    "modified": "2022-05-24T18:47:54.242Z",
     "headers": [],
     "params": [
       {
@@ -636,7 +636,20 @@
         "isPath": false
       }
     ],
-    "tests": []
+    "tests": [
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "contains",
+        "value": "data"
+      },
+      {
+        "type": "res-body",
+        "custom": "",
+        "action": "schema",
+        "value": ""
+      }
+    ]
   },
   {
     "_id": "bce89f14-b3e6-483c-aaa6-595ed9890776",
@@ -1040,5 +1053,53 @@
         "value": "0.0.1"
       }
     ]
+  },
+  {
+    "_id": "5e0c3799-663e-4c26-afd8-caa041418b90",
+    "colId": "history",
+    "containerId": "",
+    "name": "{{base_url}}/api/rest/podcasts/73209/",
+    "url": "{{base_url}}/api/rest/podcasts/73209/",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-05-24T18:44:20.112Z",
+    "modified": "2022-05-24T18:44:21.904Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "941d1cf7-4947-478b-99b1-f4cabf86ae01",
+    "colId": "history",
+    "containerId": "",
+    "name": "{{base_url}}/api/rest/episodes/?p_id=73209",
+    "url": "{{base_url}}/api/rest/episodes/?p_id=73209",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-05-24T19:10:08.335Z",
+    "modified": "2022-05-29T06:58:22.760Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "p_id",
+        "value": "73209",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "bdd72cd1-5b43-44ac-8fd5-3258d52ae4e2",
+    "colId": "history",
+    "containerId": "",
+    "name": "{{base_url}}/api/rest/podcasts/73209/episodes/",
+    "url": "{{base_url}}/api/rest/podcasts/73209/episodes/",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-05-29T07:14:54.282Z",
+    "modified": "2022-05-29T07:15:43.308Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

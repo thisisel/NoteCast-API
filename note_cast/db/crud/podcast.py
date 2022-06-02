@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 
 from neomodel import Q, db
 
@@ -7,7 +7,7 @@ from ..models import Episode, Podcast
 
 class PodcastQuery:
     @staticmethod
-    def get_podcast(p_id: str = None, p_title: str = None):
+    def get_podcast(p_id: str = None, p_title: str = None)->Union[Podcast, None]:
         if p_id:
             return Podcast.nodes.get_or_none(p_id=p_id)
         elif p_title:

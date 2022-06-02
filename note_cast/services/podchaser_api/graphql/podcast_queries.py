@@ -40,8 +40,7 @@ class PodchaserPodcastGQueries:
                     }}
                 }}
                 """.format(
-            search_term=term,
-            page=page
+            search_term=term, page=page
         )
 
         try:
@@ -113,13 +112,29 @@ class PodchaserPodcastGQueries:
         except KeyError as k_err:
             loguru_app_logger.error(k_err)
             raise CustomHTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
-       
+
         except PodchaserException:
             raise CustomHTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
     @classmethod
-    def fetch_podcast_related_episodes(cls, p_id: str):
+    def fetch_podcast_related_episodes(
+        cls,
+        p_id: str,
+        episode_search_term: str = None,
+        first: int = 10,
+        page: int = 0,
+        from_air_date: str = None,
+        to_air_date: str = None,
+    ):
+
+        ep_search_term_slot = (
+            f'searchTerm: "{episode_search_term}"' if episode_search_term else ''
+        )
+        from_slot = f'from: "{from_air_date}",' if from_air_date is not None else ''
+        to_slot = f'to: "{to_air_date}"' if to_air_date is not None else ''
+        air_date_slot = f'airDate: {{ {from_slot} {to_slot} }}'
+        filters_slot = f'filters: {{ {air_date_slot} }}'
+
         query = """
             query {{
             podcast(identifier: {{ id: "{p_id}", type: PODCHASER }}) {{
@@ -128,7 +143,15 @@ class PodchaserPodcastGQueries:
                 url
                 webUrl
 
-                episodes(paginationType: PAGE, first: 10, page: 0) {{
+                episodes(
+                        paginationType: PAGE
+                        first: {first}
+                        page: {page}
+                        {episode_search_term}
+                        {filters}
+                    
+                    
+                    ) {{
                         paginatorInfo {{
                             currentPage
                             hasMorePages
@@ -147,7 +170,11 @@ class PodchaserPodcastGQueries:
             }}
         
         """.format(
-            p_id=p_id
+            p_id=p_id,
+            episode_search_term=ep_search_term_slot,
+            first=first,
+            page=page,
+            filters=filters_slot,
         )
 
         try:
@@ -182,8 +209,9 @@ class PodchaserPodcastGQueries:
 
             return podcast, related_episodes, paginator_info
 
-        except (KeyError, PodchaserException) as errors_tuple:
-            if isinstance(errors_tuple[0], KeyError):
-                loguru_app_logger(errors_tuple[0])
-
+        except KeyError as k_err:
+            loguru_app_logger.error(k_err)
+            raise CustomHTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except PodchaserException as p_exc:
+            loguru_app_logger.error(p_exc)
             raise CustomHTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
