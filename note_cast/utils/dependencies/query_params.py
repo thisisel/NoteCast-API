@@ -1,4 +1,4 @@
-from . core import pagination_params
+from . core import pagination_params, paginator_info
 from . podcasts import podcast_query_params
 from . episodes import episode_query_params
 from . quotes import quote_query_params
