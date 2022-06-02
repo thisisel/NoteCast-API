@@ -16,7 +16,7 @@ def load_user(user_id: str) -> Union[None, User]:
     return User.nodes.get_or_none(email=user_id)
 
 
-class QueryUser:
+class UserQuery:
     @staticmethod
     def find_user(username: str = None, email: str = None, u_id: str = None):
         q = dict(
