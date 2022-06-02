@@ -1,29 +1,49 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends
 from note_cast.schemas import ApiBaseResponse, ApiErrorResponse, BaseEpisode
-from  note_cast.utils.dependencies.query_params import episode_query_params, podcast_query_params
+from note_cast.utils.dependencies.query_params import (
+    episode_query_params,
+    podcast_query_params,
+)
+from note_cast.services.podchaser_api import (
+    PodchaserPodcastGQueries,
+    PodchaserEpisodeGQueries,
+)
 
-router = APIRouter(prefix="/episodes",  tags=["episodes"])
+router = APIRouter(prefix="/episodes", tags=["episodes"])
 
 
-@router.get("/")
+@router.get(
+    "/",
+    response_model=ApiBaseResponse,
+    response_model_exclude_none=True,
+)
 def search_episode(
     podcast_q_params: dict = Depends(podcast_query_params),
     episode_q_params: dict = Depends(episode_query_params),
 ):
-    results = [
-        {
-            "e_id": "47443",
-            "e_title": "The Benefits of Mixed Emotions",
-            "e_listennotes_url": "https://melodic-erosion.net",
-        },
-    ]
-    # if p_id -> retrive podcast episodes or 404 if podcast does not exist
+
     if (p_id := podcast_q_params.get("p_id")) is not None:
-        pass
-    if (p_title := podcast_q_params.get("p_title")) is not None:
-        pass
-    # if e_id -> retrive single episode otr nothing
-    return ApiBaseResponse(message="Search episode query completed successfully", data=results)
+        (
+            podcast,
+            episodes,
+            paginator_info,
+        ) = PodchaserPodcastGQueries.fetch_podcast_related_episodes(
+            p_id=p_id,
+            episode_search_term=episode_q_params.get("e_title"),
+            from_air_date=episode_q_params.get("from_Air_date"),
+            to_air_date=episode_q_params.get("to_air_date"),
+        )
+        result = dict(podcast=podcast, episodes=episodes, paginator_info=paginator_info)
+
+    elif (e_id := episode_q_params.get("e_id")) is not None:
+        result: BaseEpisode = PodchaserEpisodeGQueries.fetch_single_episode(e_id=e_id)
+
+    elif (e_title := episode_q_params.get("e_title")) is not None:
+        result: BaseEpisode = PodchaserEpisodeGQueries.search_episode(term=e_title)
+
+    return ApiBaseResponse(
+        message="Search episode query completed successfully", data=result
+    )
 
 
 @router.get(
@@ -39,7 +59,11 @@ def read_single_episode(e_id: str):
     response = ApiBaseResponse(
         message="episode retrieved successfully", data=result.dict()
     )
-    ...
+    result: BaseEpisode = PodchaserEpisodeGQueries.fetch_single_episode(e_id=e_id)
+
+    return ApiBaseResponse(
+        message="Episode retrived successfully", data=result
+    )
 
 
 @router.get(
