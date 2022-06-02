@@ -1,9 +1,11 @@
-from typing import List, Tuple
-
-from fastapi import APIRouter, Request, status
+from fastapi import APIRouter, Request, status, Depends
 from fastapi.responses import RedirectResponse
 from note_cast.schemas import ApiBaseResponse, ApiErrorResponse, BasePodcast
 from note_cast.services.podchaser_api import PodchaserPodcastGQueries
+from note_cast.utils.dependencies.query_params import (
+    episode_query_params,
+    paginator_info,
+)
 
 
 router = APIRouter(prefix="/podcasts", tags=["podcast"])
@@ -11,14 +13,15 @@ router = APIRouter(prefix="/podcasts", tags=["podcast"])
 
 @router.get(
     "/",
-    description="search for a podcast based on title",
     response_model=ApiBaseResponse,
-    response_model_exclude_unset=True,
+    response_model_exclude_none=True,
+    description="search for a podcast based on title",
 )
 def search_podcast(term: str):
 
-    # results: List[BasePodcast] = PodchaserPodcast.search_podcast_term(term=term)
-    results, pagination_info = PodchaserPodcastGQueries.search_podcast_term(term=term)
+    podcasts, pagination_info = PodchaserPodcastGQueries.search_podcast_term(term=term)
+    results: dict = dict(podcasts=podcasts, paginationInfo=pagination_info)
+
     return ApiBaseResponse(
         message="Search podcast query completed successfully", data=results
     )
@@ -30,20 +33,14 @@ def search_podcast(term: str):
         200: {"model": ApiBaseResponse},
         404: {"model": ApiErrorResponse},
     },
-    description=" read a particular podcast with {p_id}",
+    response_model=ApiBaseResponse,
+    response_model_exclude_none=True,
+    description="read a particular podcast with {p_id}",
 )
 def read_single_podcast(p_id: str):
 
-    result: BasePodcast = PodchaserPodcast.get_single_podcast(p_id=p_id)
-    # podcast = PodcastQuery.search_podcasts(p_id=p_id)
-    # if len(podcast) == 0:
-    #     raise CustomHTTPException(
-    #         status_code=status.HTTP_404_NOT_FOUND,
-    #         category=PODCAST_404,
-    #         detail=f"podcast with p_id = {p_id} does not exist",
-    #     )
+    result: BasePodcast = PodchaserPodcastGQueries.fetch_single_podcast(p_id=p_id)
 
-    # result: BasePodcast = BasePodcast(**podcast[0].to_dict())
     return ApiBaseResponse(message="Podcast retrieved successfully", data=result)
 
 
@@ -53,11 +50,23 @@ def read_single_podcast(p_id: str):
     response_class=RedirectResponse,
     status_code=status.HTTP_302_FOUND,
 )
-def read_podcast_episodes_collection(p_id: str, request: Request):
+def read_podcast_episodes_collection(
+    p_id: str,
+    request: Request,
+    episode_q_params: dict = Depends(episode_query_params),
+    paginator: dict = Depends(paginator_info),
+):
 
-    # TODO redirect to /api/rest/episodes?p_id=p_id
     next_endpoint = request.url_for("search_episode")
     query_params = f"?p_id={p_id}"
+
+    if (e_title := episode_q_params.get('e_title')):
+        query_params += f'&e_title={e_title}'
+    if (from_air_date := episode_q_params.get('from_air_date')):
+        query_params += f'&from_air_date={from_air_date}'
+    if (to_air_date := episode_q_params.get('to_air_date')):
+        query_params += f'&to_air_date={to_air_date}'
+
     next_url = next_endpoint + query_params
 
     return next_url
