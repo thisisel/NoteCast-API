@@ -5,12 +5,8 @@ from fastapi.security import OAuth2PasswordRequestForm
 from neomodel.exceptions import UniqueProperty
 from note_cast.api.errors import CustomHTTPException
 from note_cast.app import manager as login_manager
-# from note_cast.security.login_manager import manager
 from note_cast.db.crud import User, load_user
 from note_cast.log.custom_logging import loguru_app_logger
-# from note_cast.schemas.responses import (ApiBaseResponse, ApiErrorResponse,
-#                                         BaseUserPydantic, RestLoginSuccessResp,
-#                                         UserPydantic)
 from note_cast.schemas import ApiBaseResponse, ApiErrorResponse, BaseUserPydantic, RestLoginSuccessResp, UserPydantic
 router = APIRouter(tags=["auth"])
 
