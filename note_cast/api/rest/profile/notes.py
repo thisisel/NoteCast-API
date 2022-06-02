@@ -4,14 +4,21 @@ from fastapi import APIRouter, Body, Depends, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from note_cast.api.errors import QUOTE_404, CustomHTTPException
-from note_cast.db.crud import NoteNode, NoteQuery, QueryUser, QuoteQuery, User
-from note_cast.schemas import (ApiBaseResponse, ApiErrorResponse, BaseEpisode,
-                               BaseNote, BaseUserPydantic, CreateNote,
-                               NoteCollection, QuoteMetadata, SingleNote)
+from note_cast.db.crud import NoteNode, NoteQuery, UserQuery, QuoteQuery, User
+from note_cast.schemas import (
+    ApiBaseResponse,
+    ApiErrorResponse,
+    BaseEpisode,
+    BaseNote,
+    BaseUserPydantic,
+    CreateNote,
+    NoteCollection,
+    QuoteMetadata,
+    SingleNote,
+)
 from note_cast.security.login_manager import manager
 from note_cast.utils.dependencies.core import pagination_params
-from note_cast.utils.dependencies.notes import \
-    check_get_note_existence_and_permission
+from note_cast.utils.dependencies.notes import check_get_note_existence_and_permission
 
 router = APIRouter(prefix="/notes")
 
@@ -29,15 +36,15 @@ def read_profile_notes_collection(
     user: User = Depends(manager),
     pagination_params: dict = Depends(pagination_params),
 ):
-    notes = QueryUser.find_user_notes_all(user=user, **pagination_params)
+    notes = UserQuery.find_user_notes_all(user=user, **pagination_params)
 
     annotations = []
     for note in notes:
         episode_pydantic = BaseEpisode(**note.quote.episode.to_dict())
-        
+
         quote_pydantic = QuoteMetadata(**note.quote.to_dict())
         quote_pydantic.episode = episode_pydantic
-        
+
         note_pydantic = BaseNote(
             **note.to_dict(),
         )
@@ -75,7 +82,7 @@ def create_note(
             detail="Requested Quote does not exist",
         )
 
-    new_note: NoteNode = NoteQuery.create_note_with_attachments(
+    new_note: NoteNode = NoteQuery.create_note_on_quote(
         **new_note_data.dict(), author=user, quote=quote
     )
 
