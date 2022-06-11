@@ -6,7 +6,7 @@ from fastapi import FastAPI, HTTPException
 from starlette.middleware.cors import CORSMiddleware
 
 from note_cast.api.errors import http_error_handler
-from note_cast.security.login_manager import manager
+from note_cast.security.login_manager import manager, load_user
 
 from .api.api_v1 import rest_api_router
 from .core.settings import settings
